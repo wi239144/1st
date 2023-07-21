@@ -1,1 +1,1 @@
-# shell script
+#simple shell script
