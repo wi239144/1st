@@ -1,5 +1,5 @@
 #!/bin/bash
-#Description:2-1-12 inverted triangle
+#Description:print inverted triangle
 #Write by Jason Chang (wi239144@gmail.com)
 #Version:v1.00
 
