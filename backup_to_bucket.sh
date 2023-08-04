@@ -1,6 +1,6 @@
 #!bin/bash
 #每日23:59備份,將mysql資料庫內容輸出並上傳gcp bucket
-#至VM內crontab新增一條排程
+#至VM內crontab新增一條排程,log 輸出給bklog.log
 #crontab -e
 #59 23 * * * root /bin/bash ~/backup_to_bucket.sh > ~/bklog.log 2>&1
 
