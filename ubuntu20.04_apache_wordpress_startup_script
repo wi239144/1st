@@ -1,0 +1,42 @@
+#!/bin/bash
+#bash執行需要第一行
+#解壓縮wordpress目錄,更改apache2 document root link路徑至 /var/www/html/wordpress
+#需手動建立資料庫或把資料庫安裝在另一台VM,再做資料庫link
+
+#更新apt
+sudo apt update
+sudo apt-get update
+
+#安裝&更新php,mariadb,MySQL,wget
+sudo apt install  -y mariadb-server mariadb-client php-fpm php7.4-mysql php-json php wget
+
+#安裝apache webserver
+sudo apt -y install apache2
+
+#切路徑 /var/www/html
+cd /var/www/html
+
+#下載wordpress繁中
+sudo wget http://tw.wordpress.org/latest-zh_TW.tar.gz
+
+#解壓縮wordpress目錄,刪除壓縮檔
+sudo tar zxvf latest-zh_TW.tar.gz
+sudo rm latest-zh_TW.tar.gz
+
+#提升權限
+sudo chown -R www-data:www-data /var/www/html
+
+#更改apache2 document root link路徑,先複製原檔000-default.conf,命名wordpress.conf
+cd /etc/apache2/sites-available
+sudo cp 000-default.conf wordpress.conf
+
+#搜尋檔案內容並替換html為html/wordpress
+sudo sed -i 's/html/html\/wordpress/g' wordpress.conf
+
+#禁用default link,啟用link wordpress.conf
+sudo a2dissite 000-default.conf
+sudo a2ensite wordpress.conf
+
+#啟動&開機啟動apache
+sudo systemctl restart apache2
+sudo systemctl enable apache2
